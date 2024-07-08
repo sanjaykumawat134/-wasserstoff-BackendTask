@@ -1,0 +1,38 @@
+{
+  "name": "node-balancer",
+  "version": "1.0.0",
+  "description": "A express server that share requests to multiple servers.",
+  "main": "/src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "pm2 start ./src/servers/rest1.js && pm2 start ./src/servers/rest2.js && pm2 start ./src/servers/rest3.js  && pm2 start ./src/servers/rest4.js && pm2 start ./src/servers/graphql1.js && pm2 start ./src/servers/graphql2.js && pm2 start ./src/servers/graphql3.js && pm2 start ./src/servers/grpc1.js && pm2 start ./src/servers/grpc2.js && pm2 start ./src/servers/grpc3.js",
+    "stop": "pm2 stop all",
+    "start:balancer": "nodemon node ./src/index.js  --watch",
+    "test:load:health": "npx loadtest -n 200 -c 40 -k http://localhost:8000",
+    "test:load:api": "npx loadtest -n 200 -c 200 -k http://localhost:8000/api",
+    "analyze": "python ./scripts/analyze.py",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "body-parser": "^1.20.2",
+    "csv-writer": "^1.6.0",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.3.0",
+    "http-proxy-middleware": "^2.0.6",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.3",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "loadtest": "^8.0.6",
+    "nodemon": "^3.1.4",
+    "pm2": "^5.3.0"
+  }
+}
